@@ -1,0 +1,21 @@
+# Flutter related
+.dart_tool/
+.packages
+.pub-cache/
+.pub/
+build/
+
+# Web related
+node_modules/
+.npm/
+package-lock.json
+
+# Environment/Secret
+.env*
+
+# OS related
+.DS_Store
+Thumbs.db
+
+# Model related (if you don't want to push the 4MB zip, keeping the actual tflite)
+model.zip

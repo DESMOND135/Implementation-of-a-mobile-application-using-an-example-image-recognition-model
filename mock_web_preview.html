@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mock Flutter Image Recognition App</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f3e5f5; /* Light purple */
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+        }
+        .app-bar {
+            width: 100%;
+            background-color: #d1c4e9; /* Inverse Primary */
+            padding: 16px 0;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            font-size: 20px;
+            font-weight: bold;
+            color: #4527a0;
+        }
+        .content {
+            margin-top: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 400px;
+            width: 100%;
+        }
+        #image-preview {
+            width: 300px;
+            height: 300px;
+            border-radius: 8px;
+            object-fit: cover;
+            background-color: #eee;
+            margin-bottom: 20px;
+            display: none;
+        }
+        #placeholder-text {
+            width: 300px;
+            height: 300px;
+            border: 2px dashed #9575cd;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #7e57c2;
+            margin-bottom: 20px;
+        }
+        #result-text {
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            padding: 0 20px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .btn {
+            background-color: #673ab7;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .btn:hover {
+            background-color: #5e35b1;
+        }
+        .btn:active {
+            transform: translateY(1px);
+        }
+        input[type="file"] {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-bar">Edge Image Recognition</div>
+    <div class="content">
+        <div id="placeholder-text">No image selected.</div>
+        <img id="image-preview" src="" alt="Selected Preview">
+        <div id="result-text">Select an image to classify</div>
+        <label for="image-upload" class="btn">
+            Select from Gallery
+        </label>
+        <input type="file" id="image-upload" accept="image/*">
+        <div style="margin-top: 40px; color: #777; font-size: 14px;">Developed by Desmond</div>
+    </div>
+
+    <script>
+        const imageUpload = document.getElementById('image-upload');
+        const imagePreview = document.getElementById('image-preview');
+        const placeholderText = document.getElementById('placeholder-text');
+        const resultText = document.getElementById('result-text');
+
+        imageUpload.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imagePreview.src = e.target.result;
+                    imagePreview.style.display = 'block';
+                    placeholderText.style.display = 'none';
+                    resultText.innerText = "Processing...";
+
+                    // Mock inference delay
+                    setTimeout(() => {
+                        // For mock purposes, we just return a random common label
+                        const mockLabels = ["Golden Retriever", "Coffee Mug", "Keyboard", "Orange", "Cat"];
+                        const randomLabel = mockLabels[Math.floor(Math.random() * mockLabels.length)];
+                        const confidence = (Math.random() * 20 + 80).toFixed(2);
+                        resultText.innerHTML = `Result: ${randomLabel}<br>(Confidence: ${confidence}%)`;
+                    }, 1500);
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+</body>
+</html>
